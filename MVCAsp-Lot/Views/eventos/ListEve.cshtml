@@ -1,0 +1,119 @@
+﻿@model IEnumerable<MVCAsp_Lot.Models.evento>
+
+@{
+    ViewBag.Title = "EVENTOS INDEX";
+}
+
+<h2 class="text-center">EVENTOS NO FINALIZADOS</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.body)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.start_time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.finish_time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.passed)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.body)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.start_time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.finish_time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.passed)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+</br>
+@if (Model.Count() != 0)
+{
+    foreach (var item in Model)
+    {
+        <div class="panel-body">
+            <table class="table table-striped table-responsive">
+                <tbody>
+                    <tr>
+                        <td>Event Name : <strong>@item.title </strong></td>
+                        <td>Passed? : @item.passed </td>
+                        <td>Start Date : @item.start_time</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th>Tarjeta Name</th>
+                                        <th>Estado</th>
+                                        <th>Created</th>
+                                    </tr>
+                                    @{
+                                        var totalEvent = 0;
+                                    }
+                                    @foreach (var order in item.tarjetas)
+                                    {
+                                        if (order.user_id <= 0)
+                                        {
+
+                                            <tr>
+                                                <td>@order.body</td>
+                                                @if (order.estado.Contains("w") || order.estado.Contains("l"))
+                                                {
+                                                    <td>@order.estado</td>
+                                                }
+                                                <td>@order.created_at</td>
+                                            </tr>
+
+                                        }
+
+                                        totalEvent = item.tarjetas.ToList().Count();
+                                    }
+                                </tbody>
+                            </table>
+                            <span class="pull-right" style="margin-right:100px;"><strong>Total Tarjetas :  </strong> @totalEvent</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+}
+else
+{
+    <div class="panel-body">
+        <h3 style="color:red;">Empty!</h3>
+    </div>
+
+}
+</div>
