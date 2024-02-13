@@ -1,0 +1,130 @@
+﻿@model MVCAsp_Lot.Models.evento
+
+@{
+    ViewBag.Title = "Define";
+}
+
+<h2>Define</h2>
+
+<div>
+    <h4>evento</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.body)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.body)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.start_time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.start_time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.finish_time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.finish_time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.passed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.passed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.created_at)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.created_at)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.updated_at)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.updated_at)
+        </dd>
+
+    </dl>
+</div>
+
+
+
+
+    <table class="table table-sm table-dark">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tarj in Model.tarjetas)
+            {
+            <tr>
+                <th scope="row">@tarj.id</th>
+                <th scope="row">@tarj.body</th>
+                <th>@tarj.created_at</th>
+                <th><button type="button" class="btn btn-warning">Winner?</button></th>
+                <th> @Html.ActionLink("Tarj", "definir", new { id = tarj.id })</th>
+                <th>
+                    <form action="/tarjetas/definir/@tarj.id" method="POST" novalidate="novalidate">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.id)
+                        <button type="submit" class="btn btn-warning">Submit</button>
+                        </form>
+                   
+                    </th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </tr>
+            }
+
+        </tbody>
+    </table>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
